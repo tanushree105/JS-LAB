@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Preference Manager</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f4f8;
+            color: #222;
+            text-align: center;
+            padding: 30px;
+            transition: 0.3s;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 550px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #cccccc;
+        }
+
+        h1 {
+            color: #6c63ff;
+        }
+
+        select, input, button {
+            padding: 10px;
+            margin: 8px;
+            border-radius: 6px;
+            border: 1px solid #aaa;
+        }
+
+        button {
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5148d8;
+        }
+
+        .dark {
+            background-color: #202124;
+            color: white;
+        }
+
+        .dark .container {
+            background-color: #303134;
+            color: white;
+        }
+
+        .info {
+            background-color: #eeeeff;
+            color: #333;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .dark .info {
+            background-color: #45445c;
+            color: white;
+        }
+
+        #status {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>⚙️ User Preferences</h1>
+        <p>Save your favourite theme and font size.</p>
+
+        <hr>
+
+        <h3>Choose Theme</h3>
+
+        <select id="theme">
+            <option value="light">Light Theme</option>
+            <option value="dark">Dark Theme</option>
+        </select>
+
+        <h3>Choose Font Size</h3>
+
+        <select id="fontSize">
+            <option value="16">Small</option>
+            <option value="18">Medium</option>
+            <option value="22">Large</option>
+        </select>
+
+        <br>
+
+        <button onclick="savePreferences()">
+            Save Preferences
+        </button>
+
+        <button onclick="loadPreferences()">
+            Load Preferences
+        </button>
+
+        <button onclick="resetPreferences()">
+            Reset
+        </button>
+
+        <div class="info">
+            <h3>Session Storage</h3>
+
+            <input type="text" id="sessionMessage"
+                   placeholder="Enter a temporary message">
+
+            <br>
+
+            <button onclick="saveSession()">
+                Save Session Message
+            </button>
+
+            <p id="sessionResult">No session message saved.</p>
+        </div>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        // Apply the selected theme
+        function applyTheme(theme) {
+            if (theme == "dark") {
+                document.body.className = "dark";
+            } else {
+                document.body.className = "";
+            }
+        }
+
+        // Save preferences using localStorage
+        function savePreferences() {
+            var theme = document.getElementById("theme").value;
+            var fontSize = document.getElementById("fontSize").value;
+
+            localStorage.setItem("userTheme", theme);
+            localStorage.setItem("userFontSize", fontSize);
+
+            applyTheme(theme);
+            document.body.style.fontSize = fontSize + "px";
+
+            document.getElementById("status").innerHTML =
+                "Preferences saved successfully!";
+        }
+
+        // Load preferences from localStorage
+        function loadPreferences() {
+            var theme = localStorage.getItem("userTheme");
+            var fontSize = localStorage.getItem("userFontSize");
+
+            if (theme == null) {
+                theme = "light";
+            }
+
+            if (fontSize == null) {
+                fontSize = "16";
+            }
+
+            document.getElementById("theme").value = theme;
+            document.getElementById("fontSize").value = fontSize;
+
+            applyTheme(theme);
+            document.body.style.fontSize = fontSize + "px";
+
+            document.getElementById("status").innerHTML =
+                "Saved preferences loaded!";
+        }
+
+        // Save temporary data using sessionStorage
+        function saveSession() {
+            var message =
+                document.getElementById("sessionMessage").value.trim();
+
+            if (message == "") {
+                alert("Please enter a message!");
+            } else {
+                sessionStorage.setItem("sessionMessage", message);
+
+                document.getElementById("sessionResult").innerHTML =
+                    "Saved message: " + message;
+            }
+        }
+
+        // Restore session message after page refresh
+        function loadSession() {
+            var message = sessionStorage.getItem("sessionMessage");
+
+            if (message != null) {
+                document.getElementById("sessionMessage").value = message;
+                document.getElementById("sessionResult").innerHTML =
+                    "Saved message: " + message;
+            }
+        }
+
+        // Reset saved preferences
+        function resetPreferences() {
+            localStorage.removeItem("userTheme");
+            localStorage.removeItem("userFontSize");
+
+            document.getElementById("theme").value = "light";
+            document.getElementById("fontSize").value = "16";
+
+            applyTheme("light");
+            document.body.style.fontSize = "16px";
+
+            document.getElementById("status").innerHTML =
+                "Preferences reset successfully!";
+        }
+
+        // Load saved data when the page opens
+        loadPreferences();
+        loadSession();
+    </script>
+
+</body>
+</html>
