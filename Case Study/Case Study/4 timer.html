@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Insta vs Study Time Tracker</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            background:linear-gradient(to right,#fce4ec,#e3f2fd);
+
+        }
+
+        .container{
+
+            width:500px;
+
+            background:white;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            box-shadow:0px 8px 25px lightgray;
+
+            text-align:center;
+
+        }
+
+        h1{
+
+            color:#c2185b;
+
+            font-size:30px;
+
+            margin-bottom:10px;
+
+        }
+
+        .subtitle{
+
+            color:gray;
+
+            font-size:15px;
+
+            margin-bottom:25px;
+
+        }
+
+        hr{
+
+            border:none;
+
+            border-top:1px solid #ddd;
+
+            margin-bottom:25px;
+
+        }
+
+        label{
+
+            display:block;
+
+            text-align:left;
+
+            font-weight:bold;
+
+            color:#333;
+
+            margin-bottom:8px;
+
+        }
+
+        input{
+
+            width:100%;
+
+            padding:13px;
+
+            border:1px solid #bbb;
+
+            border-radius:8px;
+
+            font-size:17px;
+
+            outline:none;
+
+            margin-bottom:20px;
+
+        }
+
+        input:focus{
+
+            border:2px solid #c2185b;
+
+        }
+
+        button{
+
+            padding:12px 25px;
+
+            margin:5px;
+
+            border:none;
+
+            border-radius:25px;
+
+            background:#c2185b;
+
+            color:white;
+
+            font-size:16px;
+
+            cursor:pointer;
+
+        }
+
+        button:hover{
+
+            background:#880e4f;
+
+        }
+
+        .cancel{
+
+            background:#757575;
+
+        }
+
+        .cancel:hover{
+
+            background:#424242;
+
+        }
+
+        .message{
+
+            margin-top:20px;
+
+            color:#c2185b;
+
+            font-weight:bold;
+
+        }
+
+        .timer{
+
+            margin-top:15px;
+
+            font-size:45px;
+
+            font-weight:bold;
+
+            color:#1565c0;
+
+        }
+
+        .status{
+
+            margin-top:10px;
+
+            color:gray;
+
+        }
+
+        footer{
+
+            margin-top:25px;
+
+            color:gray;
+
+            font-size:13px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <h1>📱 Insta vs 📚 Study</h1>
+
+
+    <p class="subtitle">
+
+        Set your Instagram usage time and stay responsible!
+
+    </p>
+
+
+    <hr>
+
+
+    <label>
+
+        Instagram Usage Time (Minutes)
+
+    </label>
+
+
+    <input
+
+        type="text"
+
+        id="minutes"
+
+        placeholder="Example: 10"
+
+    >
+
+
+    <button onclick="startTimer()">
+
+        Start Insta Timer
+
+    </button>
+
+
+    <button class="cancel" onclick="stopTimer()">
+
+        Cancel
+
+    </button>
+
+
+    <div class="message">
+
+        📱 Scrolling Instagram... enjoy responsibly!
+
+    </div>
+
+
+    <div class="timer" id="time">
+
+        00:00
+
+    </div>
+
+
+    <div class="status" id="status">
+
+        Enter time and start the timer.
+
+    </div>
+
+
+    <footer>
+
+        JavaScript Timer Practical using setInterval() and setTimeout()
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+
+var timer;
+
+var seconds;
+
+
+function startTimer()
+{
+
+    var minutes = parseInt(
+
+        document.getElementById("minutes").value
+
+    );
+
+
+    if(isNaN(minutes) || minutes <= 0)
+    {
+
+        alert("Please enter valid time in minutes.");
+
+        return;
+
+    }
+
+
+    /*
+       Convert minutes into seconds
+    */
+
+    seconds = minutes * 60;
+
+
+    /*
+       Display initial time
+    */
+
+    displayTime();
+
+
+    document.getElementById("status").innerHTML =
+
+    "⏳ Instagram timer is running...";
+
+
+    /*
+       setInterval runs repeatedly
+       after every 1 second.
+    */
+
+    timer = setInterval(function()
+    {
+
+        seconds--;
+
+        displayTime();
+
+
+        if(seconds <= 0)
+        {
+
+            clearInterval(timer);
+
+
+            document.getElementById("status").innerHTML =
+
+            "📚 Instagram time is over! Time to study.";
+
+
+            /*
+               setTimeout displays alert
+               after 500 milliseconds.
+            */
+
+            setTimeout(function()
+            {
+
+                alert("⏰ Time's up! Close Instagram and go study 📚");
+
+            },500);
+
+        }
+
+    },1000);
+
+}
+
+
+function displayTime()
+{
+
+    var minutes = parseInt(seconds / 60);
+
+    var remainingSeconds = seconds % 60;
+
+
+    if(minutes < 10)
+    {
+
+        minutes = "0" + minutes;
+
+    }
+
+
+    if(remainingSeconds < 10)
+    {
+
+        remainingSeconds = "0" + remainingSeconds;
+
+    }
+
+
+    document.getElementById("time").innerHTML =
+
+    minutes + ":" + remainingSeconds;
+
+}
+
+
+function stopTimer()
+{
+
+    clearInterval(timer);
+
+
+    document.getElementById("status").innerHTML =
+
+    "⏸️ Timer stopped.";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
