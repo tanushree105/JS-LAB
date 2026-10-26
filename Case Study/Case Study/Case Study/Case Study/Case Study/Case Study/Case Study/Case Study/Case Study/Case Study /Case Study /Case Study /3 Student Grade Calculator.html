@@ -1,0 +1,645 @@
+INDEX.HTML
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Student Grade Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <h1>🎓 Student Grade Calculator</h1>
+
+    <div class="main">
+
+        <!-- LEFT SIDE -->
+
+        <div class="left">
+
+            <h2>Student Details</h2>
+
+            <hr><br>
+
+            <table>
+
+                <tr>
+
+                    <td>Student Name</td>
+
+                    <td>
+
+                        <input type="text" id="name">
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>PRN Number</td>
+
+                    <td>
+
+                        <input type="text" id="prn">
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Programming in C</td>
+
+                    <td>
+
+                        <input type="number" id="c">
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Java</td>
+
+                    <td>
+
+                        <input type="number" id="java">
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Python</td>
+
+                    <td>
+
+                        <input type="number" id="python">
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>DBMS</td>
+
+                    <td>
+
+                        <input type="number" id="dbms">
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>Computer Networks</td>
+
+                    <td>
+
+                        <input type="number" id="cn">
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <br>
+
+            <center>
+
+                <button onclick="calculateResult()">
+
+                    Calculate Result
+
+                </button>
+
+                <button onclick="resetForm()">
+
+                    Reset
+
+                </button>
+
+            </center>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="right">
+
+            <h2>Student Result</h2>
+
+            <hr><br>
+
+            <div id="output">
+
+                <center>
+
+                    <h3>No Result Yet</h3>
+
+                    <br>
+
+                    <p>
+
+                        Enter student details and click
+
+                        <b>Calculate Result</b>
+
+                    </p>
+
+                </center>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+
+SCRIPT.JS
+function calculateResult()
+{
+
+var name=document.getElementById("name").value;
+var prn=document.getElementById("prn").value;
+
+var c=Number(document.getElementById("c").value);
+var java=Number(document.getElementById("java").value);
+var python=Number(document.getElementById("python").value);
+var dbms=Number(document.getElementById("dbms").value);
+var cn=Number(document.getElementById("cn").value);
+
+/* Validation */
+
+if(name=="")
+{
+alert("Please Enter Student Name");
+return;
+}
+
+if(prn=="")
+{
+alert("Please Enter PRN Number");
+return;
+}
+
+if(c<0 || c>100 || java<0 || java>100 || python<0 || python>100 || dbms<0 || dbms>100 || cn<0 || cn>100)
+{
+alert("Marks should be between 0 and 100");
+return;
+}
+
+/* Calculation */
+
+var total=c+java+python+dbms+cn;
+
+var percentage=total/5;
+
+var grade="";
+var status="PASS";
+var remark="";
+
+if(c<35 || java<35 || python<35 || dbms<35 || cn<35)
+{
+status="FAIL";
+grade="F";
+remark="Needs Improvement";
+}
+else if(percentage>=90)
+{
+grade="A+";
+remark="Outstanding Performance";
+}
+else if(percentage>=80)
+{
+grade="A";
+remark="Excellent";
+}
+else if(percentage>=70)
+{
+grade="B";
+remark="Very Good";
+}
+else if(percentage>=60)
+{
+grade="C";
+remark="Good";
+}
+else if(percentage>=50)
+{
+grade="D";
+remark="Average";
+}
+else
+{
+grade="F";
+status="FAIL";
+remark="Needs Improvement";
+}
+
+/* Grade Color */
+
+var gradeColor="blue";
+
+if(grade=="A+")
+{
+gradeColor="green";
+}
+else if(grade=="A")
+{
+gradeColor="#2563eb";
+}
+else if(grade=="B")
+{
+gradeColor="orange";
+}
+else if(grade=="C")
+{
+gradeColor="#f59e0b";
+}
+else
+{
+gradeColor="red";
+}
+
+/* Status Class */
+
+var statusClass="pass";
+
+if(status=="FAIL")
+{
+statusClass="fail";
+}
+
+/* Result */
+
+document.getElementById("output").innerHTML=
+
+"<div class='report'>"+
+
+"<h3>🎓 STUDENT REPORT</h3>"+
+
+"<div class='line'></div>"+
+
+"<div class='info'><b>👤 Student Name</b><span>"+name+"</span></div>"+
+
+"<div class='info'><b>🆔 PRN Number</b><span>"+prn+"</span></div>"+
+
+"<div class='line'></div>"+
+
+"<h4>📖 Subject Wise Marks</h4><br>"+
+
+"<div class='subject'><span>Programming in C</span><span>"+c+"</span></div>"+
+
+"<div class='subject'><span>Java</span><span>"+java+"</span></div>"+
+
+"<div class='subject'><span>Python</span><span>"+python+"</span></div>"+
+
+"<div class='subject'><span>DBMS</span><span>"+dbms+"</span></div>"+
+
+"<div class='subject'><span>Computer Networks</span><span>"+cn+"</span></div>"+
+
+"<div class='line'></div>"+
+
+"<div class='info total'><span>📚 Total Marks</span><span>"+total+" / 500</span></div>"+
+
+"<div class='info total'><span>📈 Percentage</span><span>"+percentage.toFixed(2)+" %</span></div>"+
+
+"<div class='info total'><span>🏆 Grade</span><span class='grade' style='color:"+gradeColor+";'>"+grade+"</span></div>"+
+
+"<div class='info total'><span>✅ Status</span><span class='"+statusClass+"'>"+status+"</span></div>"+
+
+"<div class='info total'><span>🌟 Remark</span><span>"+remark+"</span></div>"+
+
+"<div class='line'></div>"+
+
+"<div class='footer'>🎉 Thank You! Keep Learning 🚀</div>"+
+
+"</div>";
+
+}
+
+function resetForm()
+{
+
+document.getElementById("name").value="";
+document.getElementById("prn").value="";
+document.getElementById("c").value="";
+document.getElementById("java").value="";
+document.getElementById("python").value="";
+document.getElementById("dbms").value="";
+document.getElementById("cn").value="";
+
+document.getElementById("output").innerHTML=
+
+"<center><br><br><h2>📋 Student Result</h2><br><br><p>Enter student details and click <b>Calculate Result</b></p></center>";
+
+}
+
+STYLE.CSS
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:linear-gradient(to right,#dbeafe,#eff6ff);
+
+padding:30px;
+
+}
+
+h1{
+
+text-align:center;
+color:#0f172a;
+margin-bottom:30px;
+font-size:40px;
+
+}
+
+.main{
+
+width:1200px;
+margin:auto;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+
+gap:30px;
+
+}
+
+.left{
+
+width:50%;
+
+background:white;
+
+padding:30px;
+
+border-radius:15px;
+
+box-shadow:0px 0px 15px lightgray;
+
+}
+
+.right{
+
+width:50%;
+
+background:white;
+
+padding:30px;
+
+border-radius:15px;
+
+box-shadow:0px 0px 15px lightgray;
+
+min-height:700px;
+
+}
+
+.left h2,
+.right h2{
+
+text-align:center;
+
+color:#2563eb;
+
+margin-bottom:10px;
+
+}
+
+table{
+
+width:100%;
+
+}
+
+td{
+
+padding:12px;
+
+font-size:18px;
+
+}
+
+input{
+
+width:100%;
+
+padding:10px;
+
+font-size:16px;
+
+border:1px solid #cbd5e1;
+
+border-radius:8px;
+
+outline:none;
+
+}
+
+input:focus{
+
+border:2px solid #2563eb;
+
+}
+
+button{
+
+padding:12px 30px;
+
+margin:10px;
+
+background:#2563eb;
+
+color:white;
+
+font-size:18px;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+button:hover{
+
+background:#1d4ed8;
+
+}
+
+hr{
+
+margin:15px 0;
+
+}
+
+#output{
+
+background:#f8fafc;
+
+border-radius:12px;
+
+padding:20px;
+
+min-height:560px;
+
+border:2px solid #dbeafe;
+
+}
+
+/* Result Card */
+
+.report{
+
+background:white;
+
+padding:25px;
+
+border-radius:12px;
+
+box-shadow:0px 0px 10px #d1d5db;
+
+}
+
+.report h3{
+
+text-align:center;
+
+color:#2563eb;
+
+margin-bottom:20px;
+
+font-size:28px;
+
+}
+
+.line{
+
+border-bottom:1px solid #d1d5db;
+
+margin:15px 0;
+
+}
+
+.info{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:10px 0;
+
+font-size:18px;
+
+}
+
+.subject{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:8px 0;
+
+font-size:17px;
+
+}
+
+.total{
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#0f172a;
+
+}
+
+.pass{
+
+color:green;
+
+font-weight:bold;
+
+font-size:22px;
+
+}
+
+.fail{
+
+color:red;
+
+font-weight:bold;
+
+font-size:22px;
+
+}
+
+.grade{
+
+font-size:24px;
+
+font-weight:bold;
+
+}
+
+.footer{
+
+margin-top:25px;
+
+text-align:center;
+
+font-size:20px;
+
+color:#2563eb;
+
+font-weight:bold;
+
+}
+
+@media(max-width:1000px){
+
+.main{
+
+flex-direction:column;
+
+width:95%;
+
+}
+
+.left,
+.right{
+
+width:100%;
+
+}
+
+}
