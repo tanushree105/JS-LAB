@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Maximum and Minimum</title>
+
+</head>
+
+<body>
+
+    <h2>Find Maximum and Minimum Value</h2>
+
+    <script>
+
+        let numbers = [25, 10, 45, 5, 60, 30];
+
+        let maximum = numbers.reduce(function(max, num)
+        {
+            if(num > max)
+            {
+                return num;
+            }
+            else
+            {
+                return max;
+            }
+        });
+
+        let minimum = numbers.reduce(function(min, num)
+        {
+            if(num < min)
+            {
+                return num;
+            }
+            else
+            {
+                return min;
+            }
+        });
+
+
+        document.write("Array: " + numbers + "<br><br>");
+
+        document.write("Maximum Value: " + maximum + "<br><br>");
+
+        document.write("Minimum Value: " + minimum);
+
+    </script>
+
+</body>
+
+</html>
