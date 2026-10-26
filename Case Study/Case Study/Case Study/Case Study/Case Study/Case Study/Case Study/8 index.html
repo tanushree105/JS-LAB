@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>FitZone Gym Admission</title>
+
+    <style>
+
+        body
+        {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eaf4f4;
+        }
+
+        .header
+        {
+            background: #087f5b;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .header h1
+        {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p
+        {
+            margin-bottom: 0;
+        }
+
+        .container
+        {
+            width: 85%;
+            max-width: 850px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+        }
+
+        .section
+        {
+            margin-bottom: 22px;
+        }
+
+        .section h2
+        {
+            color: #087f5b;
+            border-bottom: 2px solid #d8f3dc;
+            padding-bottom: 8px;
+        }
+
+        .row
+        {
+            display: flex;
+            gap: 20px;
+        }
+
+        .field
+        {
+            flex: 1;
+            margin-bottom: 18px;
+        }
+
+        label
+        {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select
+        {
+            width: 100%;
+            padding: 11px;
+            box-sizing: border-box;
+            border: 2px solid #ddd;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus
+        {
+            outline: none;
+            border-color: #087f5b;
+        }
+
+        .valid
+        {
+            border-color: #2b9348;
+            background: #f1fff4;
+        }
+
+        .invalid
+        {
+            border-color: #d62828;
+            background: #fff4f4;
+        }
+
+        .message
+        {
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
+            min-height: 16px;
+        }
+
+        .success
+        {
+            color: #2b9348;
+        }
+
+        .error
+        {
+            color: #d62828;
+        }
+
+        .gender
+        {
+            display: flex;
+            gap: 25px;
+            margin-top: 8px;
+        }
+
+        .gender label
+        {
+            font-weight: normal;
+        }
+
+        .gender input
+        {
+            width: auto;
+        }
+
+        .submit
+        {
+            width: 100%;
+            padding: 14px;
+            background: #087f5b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit:hover
+        {
+            background: #056b4d;
+        }
+
+        #result
+        {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            background: #d8f3dc;
+            color: #1b4332;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        @media(max-width: 650px)
+        {
+            .row
+            {
+                display: block;
+            }
+
+            .container
+            {
+                width: 80%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="header">
+
+        <h1>🏋️ FITZONE GYM</h1>
+
+        <p>Gym Admission & Fitness Registration</p>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <form id="gymForm">
+
+
+            <!-- PERSONAL DETAILS -->
+
+            <div class="section">
+
+                <h2>Personal Details</h2>
+
+
+                <div class="field">
+
+                    <label>Full Name</label>
+
+                    <input type="text"
+                           id="fullName"
+                           placeholder="Enter your name"
+                           oninput="checkName()">
+
+                    <span id="nameMessage"
+                          class="message"></span>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="field">
+
+                        <label>Email</label>
+
+                        <input type="text"
+                               id="email"
+                               placeholder="example@gmail.com"
+                               oninput="checkEmail()">
+
+                        <span id="emailMessage"
+                              class="message"></span>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Mobile Number</label>
+
+                        <input type="text"
+                               id="mobile"
+                               maxlength="10"
+                               placeholder="10 digit number"
+                               oninput="checkMobile()">
+
+                        <span id="mobileMessage"
+                              class="message"></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="field">
+
+                        <label>Date of Birth</label>
+
+                        <input type="date"
+                               id="birthDate"
+                               onchange="checkDate()">
+
+                        <span id="dateMessage"
+                              class="message"></span>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Fitness Goal</label>
+
+                        <select id="goal"
+                                onchange="checkGoal()">
+
+                            <option value="">
+                                Select your goal
+                            </option>
+
+                            <option value="Weight Loss">
+                                Weight Loss
+                            </option>
+
+                            <option value="Muscle Gain">
+                                Muscle Gain
+                            </option>
+
+                            <option value="Fitness">
+                                General Fitness
+                            </option>
+
+                            <option value="Strength">
+                                Strength Training
+                            </option>
+
+                        </select>
+
+                        <span id="goalMessage"
+                              class="message"></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MEMBERSHIP -->
+
+            <div class="section">
+
+                <h2>Membership Details</h2>
+
+
+                <div class="field">
+
+                    <label>Membership Plan</label>
+
+                    <select id="plan"
+                            onchange="checkPlan()">
+
+                        <option value="">
+                            Select membership plan
+                        </option>
+
+                        <option value="Monthly">
+                            Monthly - ₹1500
+                        </option>
+
+                        <option value="Quarterly">
+                            Quarterly - ₹4000
+                        </option>
+
+                        <option value="Yearly">
+                            Yearly - ₹12000
+                        </option>
+
+                    </select>
+
+                    <span id="planMessage"
+                          class="message"></span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Gender</label>
+
+                    <div class="gender">
+
+                        <label>
+                            <input type="radio"
+                                   name="gender"
+                                   value="Male">
+                            Male
+                        </label>
+
+                        <label>
+                            <input type="radio"
+                                   name="gender"
+                                   value="Female">
+                            Female
+                        </label>
+
+                        <label>
+                            <input type="radio"
+                                   name="gender"
+                                   value="Other">
+                            Other
+                        </label>
+
+                    </div>
+
+                    <span id="genderMessage"
+                          class="message"></span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="section">
+
+                <h2>Account Security</h2>
+
+
+                <div class="row">
+
+                    <div class="field">
+
+                        <label>Password</label>
+
+                        <input type="password"
+                               id="password"
+                               placeholder="Minimum 6 characters"
+                               oninput="checkPassword()">
+
+                        <span id="passwordMessage"
+                              class="message"></span>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>Confirm Password</label>
+
+                        <input type="password"
+                               id="confirmPassword"
+                               placeholder="Re-enter password"
+                               oninput="checkConfirm()">
+
+                        <span id="confirmMessage"
+                              class="message"></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <button type="button"
+                    class="submit"
+                    onclick="submitForm()">
+
+                JOIN FITZONE
+
+            </button>
+
+
+        </form>
+
+
+        <div id="result">
+            🎉 Gym admission completed successfully!
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+
+
+        /* NAME VALIDATION */
+
+        function checkName()
+        {
+            var value =
+            document.getElementById("fullName").value.trim();
+
+            var input =
+            document.getElementById("fullName");
+
+            var message =
+            document.getElementById("nameMessage");
+
+
+            if(value == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Name is required";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            if(value.length < 3)
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Enter at least 3 characters";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Name looks good";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* EMAIL VALIDATION */
+
+        function checkEmail()
+        {
+            var value =
+            document.getElementById("email").value.trim();
+
+            var input =
+            document.getElementById("email");
+
+            var message =
+            document.getElementById("emailMessage");
+
+
+            var pattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if(value == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Email is required";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            if(!pattern.test(value))
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Enter a valid email";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Valid email";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* MOBILE VALIDATION */
+
+        function checkMobile()
+        {
+            var value =
+            document.getElementById("mobile").value.trim();
+
+            var input =
+            document.getElementById("mobile");
+
+            var message =
+            document.getElementById("mobileMessage");
+
+
+            var pattern =
+            /^[6-9][0-9]{9}$/;
+
+
+            if(value == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Mobile number is required";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            if(!pattern.test(value))
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Enter a valid 10-digit number";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Valid mobile number";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* DATE VALIDATION */
+
+        function checkDate()
+        {
+            var value =
+            document.getElementById("birthDate").value;
+
+            var input =
+            document.getElementById("birthDate");
+
+            var message =
+            document.getElementById("dateMessage");
+
+
+            if(value == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Select your date of birth";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Date selected";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* FITNESS GOAL */
+
+        function checkGoal()
+        {
+            var value =
+            document.getElementById("goal").value;
+
+            var input =
+            document.getElementById("goal");
+
+            var message =
+            document.getElementById("goalMessage");
+
+
+            if(value == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Select a fitness goal";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Goal selected";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* MEMBERSHIP */
+
+        function checkPlan()
+        {
+            var value =
+            document.getElementById("plan").value;
+
+            var input =
+            document.getElementById("plan");
+
+            var message =
+            document.getElementById("planMessage");
+
+
+            if(value == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Select a membership plan";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Membership selected";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* PASSWORD */
+
+        function checkPassword()
+        {
+            var value =
+            document.getElementById("password").value;
+
+            var input =
+            document.getElementById("password");
+
+            var message =
+            document.getElementById("passwordMessage");
+
+
+            if(value.length < 6)
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Password must contain 6 characters";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Password accepted";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* CONFIRM PASSWORD */
+
+        function checkConfirm()
+        {
+            var password =
+            document.getElementById("password").value;
+
+            var confirm =
+            document.getElementById("confirmPassword").value;
+
+            var input =
+            document.getElementById("confirmPassword");
+
+            var message =
+            document.getElementById("confirmMessage");
+
+
+            if(confirm == "")
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Confirm your password";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            if(password != confirm)
+            {
+                input.className = "invalid";
+
+                message.innerHTML =
+                "✗ Passwords do not match";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            input.className = "valid";
+
+            message.innerHTML =
+            "✓ Passwords match";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* GENDER */
+
+        function checkGender()
+        {
+            var genders =
+            document.getElementsByName("gender");
+
+            var selected = false;
+
+
+            for(var i = 0; i < genders.length; i++)
+            {
+                if(genders[i].checked)
+                {
+                    selected = true;
+                }
+            }
+
+
+            var message =
+            document.getElementById("genderMessage");
+
+
+            if(!selected)
+            {
+                message.innerHTML =
+                "✗ Please select your gender";
+
+                message.className =
+                "message error";
+
+                return false;
+            }
+
+
+            message.innerHTML =
+            "✓ Gender selected";
+
+            message.className =
+            "message success";
+
+            return true;
+        }
+
+
+
+        /* FORM SUBMISSION */
+
+        function submitForm()
+        {
+            var nameOK = checkName();
+
+            var emailOK = checkEmail();
+
+            var mobileOK = checkMobile();
+
+            var dateOK = checkDate();
+
+            var goalOK = checkGoal();
+
+            var planOK = checkPlan();
+
+            var passwordOK = checkPassword();
+
+            var confirmOK = checkConfirm();
+
+            var genderOK = checkGender();
+
+
+            if(nameOK &&
+               emailOK &&
+               mobileOK &&
+               dateOK &&
+               goalOK &&
+               planOK &&
+               passwordOK &&
+               confirmOK &&
+               genderOK)
+            {
+                document.getElementById("result").style.display =
+                "block";
+
+                alert(
+                "🎉 Gym Admission Successful!"
+                );
+            }
+            else
+            {
+                document.getElementById("result").style.display =
+                "none";
+
+                alert(
+                "Please correct the highlighted fields."
+                );
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>
