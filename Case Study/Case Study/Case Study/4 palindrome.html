@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Palindrome Checker</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+
+            min-height:100vh;
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            background:linear-gradient(to right,#e3f2fd,#fce4ec);
+
+        }
+
+        .container{
+
+            width:550px;
+
+            background:white;
+
+            padding:40px;
+
+            border-radius:20px;
+
+            box-shadow:0px 8px 25px lightgray;
+
+            text-align:center;
+
+        }
+
+        h1{
+
+            color:#1565c0;
+
+            font-size:34px;
+
+            margin-bottom:10px;
+
+        }
+
+        .subtitle{
+
+            color:gray;
+
+            margin-bottom:30px;
+
+            font-size:16px;
+
+        }
+
+        .line{
+
+            border:none;
+
+            border-top:1px solid #ddd;
+
+            margin-bottom:25px;
+
+        }
+
+        label{
+
+            display:block;
+
+            text-align:left;
+
+            font-weight:bold;
+
+            color:#333;
+
+            margin-bottom:8px;
+
+        }
+
+        input{
+
+            width:100%;
+
+            padding:14px;
+
+            border:1px solid #bbb;
+
+            border-radius:8px;
+
+            font-size:18px;
+
+            outline:none;
+
+            margin-bottom:20px;
+
+        }
+
+        input:focus{
+
+            border:2px solid #1565c0;
+
+        }
+
+        button{
+
+            padding:13px 30px;
+
+            background:#1565c0;
+
+            color:white;
+
+            border:none;
+
+            border-radius:25px;
+
+            font-size:17px;
+
+            cursor:pointer;
+
+            margin:5px;
+
+        }
+
+        button:hover{
+
+            background:#0d47a1;
+
+        }
+
+        .reset{
+
+            background:#757575;
+
+        }
+
+        .reset:hover{
+
+            background:#424242;
+
+        }
+
+        .result{
+
+            margin-top:30px;
+
+            padding:22px;
+
+            background:#f5f9ff;
+
+            border:1px solid #bbdefb;
+
+            border-radius:12px;
+
+        }
+
+        .result h2{
+
+            color:#1565c0;
+
+            margin-bottom:12px;
+
+        }
+
+        #output{
+
+            font-size:18px;
+
+            line-height:30px;
+
+            color:#333;
+
+        }
+
+        .success{
+
+            color:green;
+
+            font-weight:bold;
+
+        }
+
+        .error{
+
+            color:red;
+
+            font-weight:bold;
+
+        }
+
+        footer{
+
+            margin-top:25px;
+
+            color:gray;
+
+            font-size:13px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+    <h1>🔄 Palindrome Checker</h1>
+
+    <p class="subtitle">
+
+        Check whether a word, text or number is a palindrome.
+
+    </p>
+
+    <hr class="line">
+
+
+    <label>Enter Text or Number</label>
+
+    <input
+
+        type="text"
+
+        id="inputText"
+
+        placeholder="Example: eye, madam, 121"
+
+    >
+
+
+    <button onclick="checkPalindrome()">
+
+        Check Palindrome
+
+    </button>
+
+
+    <button class="reset" onclick="resetResult()">
+
+        Reset
+
+    </button>
+
+
+    <div class="result">
+
+        <h2>Result</h2>
+
+        <p id="output">
+
+            Result will appear here.
+
+        </p>
+
+    </div>
+
+
+    <footer>
+
+        JavaScript Function Practical
+
+    </footer>
+
+</div>
+
+
+<script>
+
+
+/* FUNCTION DECLARATION */
+
+function checkPalindrome()
+{
+
+    try
+    {
+
+        var text=document.getElementById("inputText").value;
+
+
+        /* FORM VALIDATION */
+
+        if(text=="")
+        {
+
+            throw "Please enter a word, text or number.";
+
+        }
+
+
+        /*
+        Scope:
+        original, reverse and i are local
+        variables of this function.
+        */
+
+        var original=text.toLowerCase();
+
+        original=original.replaceAll(" ","");
+
+
+        var reverse="";
+
+
+        /* REVERSE THE TEXT */
+
+        for(var i=original.length-1;i>=0;i--)
+        {
+
+            reverse=reverse+original.charAt(i);
+
+        }
+
+
+        /* CHECK PALINDROME */
+
+        if(original==reverse)
+        {
+
+            document.getElementById("output").innerHTML=
+
+            "<span class='success'>";
+
+            document.getElementById("output").innerHTML+=
+
+            "✅ "+text+" is a Palindrome!";
+
+            document.getElementById("output").innerHTML+=
+
+            "<br><br>Original : "+original;
+
+            document.getElementById("output").innerHTML+=
+
+            "<br>Reverse : "+reverse;
+
+        }
+
+        else
+        {
+
+            document.getElementById("output").innerHTML=
+
+            "<span class='error'>";
+
+            document.getElementById("output").innerHTML+=
+
+            "❌ "+text+" is NOT a Palindrome.";
+
+            document.getElementById("output").innerHTML+=
+
+            "<br><br>Original : "+original;
+
+            document.getElementById("output").innerHTML+=
+
+            "<br>Reverse : "+reverse;
+
+        }
+
+    }
+
+
+    catch(error)
+    {
+
+        document.getElementById("output").innerHTML=
+
+        "<span class='error'>⚠️ "+error+"</span>";
+
+    }
+
+}
+
+
+
+/* FUNCTION EXPRESSION */
+
+var resetResult=function()
+{
+
+    document.getElementById("inputText").value="";
+
+    document.getElementById("output").innerHTML=
+
+    "Result will appear here.";
+
+};
+
+
+
+/* CLOSURE EXAMPLE */
+
+function createMessage()
+{
+
+    var message="Palindrome Checker";
+
+
+    return function()
+    {
+
+        return message;
+
+    };
+
+}
+
+
+var getMessage=createMessage();
+
+
+</script>
+
+
+</body>
+
+</html>
